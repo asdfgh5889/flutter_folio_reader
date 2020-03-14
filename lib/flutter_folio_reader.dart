@@ -6,8 +6,7 @@ class FlutterFolioReader {
   static const MethodChannel _channel =
       const MethodChannel('flutter_folio_reader');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  static Future<void> openBook(String path) async {
+    await _channel.invokeMethod('openBook', path);
   }
 }
