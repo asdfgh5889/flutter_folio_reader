@@ -15,6 +15,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool isWaiting = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,9 +28,15 @@ class _MyAppState extends State<MyApp> {
           child: RaisedButton(
             onPressed: () async {
               String path = await FilePicker.getFilePath(type: FileType.ANY);
+              setState(() {
+                isWaiting = true;
+              });
               await FlutterFolioReader.openBook(path);
+              setState(() {
+                isWaiting = false;
+              });
             },
-            child: Text('Open book'),
+            child: isWaiting ? CircularProgressIndicator() : Text('Open book'),
           ),
         ),
       ),
